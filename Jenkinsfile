@@ -16,7 +16,7 @@ pipeline {
         stage('Ejecutar Aplicación') {
             steps {
                 // Ejecuta el archivo JAR generado
-                bat 'java -jar target\\eje1-0.0.1-SNAPSHOT.jar'  // Uso de \\ para la ruta en Windows
+                bat 'java -jar target\\com.sistema.trailers-1.0'  // Uso de \\ para la ruta en Windows
             }
         }
     }
