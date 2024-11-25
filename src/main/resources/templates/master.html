@@ -11,6 +11,27 @@
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 	<style>
+		/* Estilos para el modo claro (por defecto) */
+		.navbar {
+			box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+		}
+
+		.navbar-light {
+			background-color: #ffffff !important;
+		}
+
+		.navbar-light .navbar-brand {
+			color: #333333;
+		}
+
+		.navbar-light .nav-link {
+			color: #555555 !important;
+		}
+
+		.navbar-light .nav-link:hover {
+			color: #000000 !important;
+		}
+
 		/* Modo oscuro */
 		body.dark-mode {
 			background-color: #121212;
@@ -78,10 +99,10 @@
 		}
 	</style>
 </head>
-<body class="bg-light">
+<body class="dark-mode bg-dark">
 
 <!-- Barra de navegación -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="/">CinemaTrailer</a>
 		<button class="navbar-toggler" type="button"
@@ -97,7 +118,7 @@
 				<li class="nav-item"><a class="nav-link" href="/admin">Administración</a></li>
 			</ul>
 			<!-- Botón para cambiar tema -->
-			<button id="theme-toggle" class="btn btn-outline-secondary ms-auto">Modo Oscuro</button>
+			<button id="theme-toggle" class="btn btn-outline-secondary ms-auto">Modo Claro</button>
 		</div>
 	</div>
 </nav>
@@ -118,23 +139,61 @@
 
 <!-- JavaScript para el cambio de tema -->
 <script>
-	document.getElementById('theme-toggle').addEventListener('click', function() {
-		document.body.classList.toggle('dark-mode');
-		const isDarkMode = document.body.classList.contains('dark-mode');
-		document.body.classList.toggle('bg-dark', isDarkMode);
-		document.body.classList.toggle('bg-light', !isDarkMode);
-
-		// Cambia el texto del botón
-		this.textContent = isDarkMode ? 'Modo Claro' : 'Modo Oscuro';
-
-		// Cambia el color del nav bar
+	// Función para establecer el modo
+	function setThemeMode(isDarkMode) {
+		const body = document.body;
 		const navbar = document.querySelector('.navbar');
+		const themeToggleBtn = document.getElementById('theme-toggle');
+
+		// Aplicar o remover las clases del modo oscuro
+		body.classList.toggle('dark-mode', isDarkMode);
+		body.classList.toggle('bg-dark', isDarkMode);
+		body.classList.toggle('bg-light', !isDarkMode);
+
+		// Actualizar navbar
 		navbar.classList.toggle('navbar-dark', isDarkMode);
 		navbar.classList.toggle('navbar-light', !isDarkMode);
 		navbar.classList.toggle('bg-dark', isDarkMode);
 		navbar.classList.toggle('bg-light', !isDarkMode);
+
+		// Actualizar texto del botón
+		themeToggleBtn.textContent = isDarkMode ? 'Modo Claro' : 'Modo Oscuro';
+
+		// Guardar la preferencia en localStorage
+		localStorage.setItem('darkMode', isDarkMode);
+	}
+
+	// Función para obtener el modo actual
+	function getCurrentTheme() {
+		// Verificar si hay una preferencia guardada
+		const savedTheme = localStorage.getItem('darkMode');
+		if (savedTheme !== null) {
+			return savedTheme === 'true';
+		}
+
+		// Si no hay preferencia guardada, verificar preferencia del sistema
+		return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+	}
+
+	// Aplicar el tema al cargar la página
+	document.addEventListener('DOMContentLoaded', () => {
+		const isDarkMode = getCurrentTheme();
+		setThemeMode(isDarkMode);
+
+		// Configurar el event listener para el botón de cambio de tema
+		document.getElementById('theme-toggle').addEventListener('click', () => {
+			const newTheme = !document.body.classList.contains('dark-mode');
+			setThemeMode(newTheme);
+		});
+
+		// Opcional: Escuchar cambios en la preferencia del sistema
+		if (window.matchMedia) {
+			window.matchMedia('(prefers-color-scheme: dark)')
+					.addEventListener('change', e => {
+						setThemeMode(e.matches);
+					});
+		}
 	});
 </script>
 </body>
 </html>
-
