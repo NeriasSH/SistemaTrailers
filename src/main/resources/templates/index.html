@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{master.html}">
 <head>
@@ -12,10 +12,10 @@
 	<div class="bg-light p-5 rounded">
 	   <h1 class="display-1 text-success">Bienvenido a CinemaTrailers</h1>
 	   <h2>Disfruta de todos tus trailers favoritos sin costo alguno</h2>
-	</div>	
-	
+	</div>
+
 	<h4 class="text-danger mt-5">Últimos estrenos</h4>
-	
+
 	<div class="row">
 	    <div class="col-md-3 my-5" th:each="pelicula : ${ultimasPeliculas}" th:object="${pelicula}">
 	       <a th:href="@{/peliculas/{id}(id=*{id})}" class="card shadow-lg" style="text-decoration:none;">
@@ -27,6 +27,6 @@
 	       </a>
 	    </div>
 	</div>
-  </div> 
+  </div>
 </body>
 </html>
