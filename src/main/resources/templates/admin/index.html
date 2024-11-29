@@ -5,6 +5,7 @@
 <head>
 <meta charset="utf-8">
 <title>Administrar Películas</title>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -65,11 +66,23 @@
   <div layout:fragment="scripts">
       <script>
          function eliminarPelicula(id){
-        	 if(!confirm('¿Estás seguro de eliminar esta película?')){
-        		 return;
-        	 }
-			 document.getElementById('eliminarPeliculaForm' + id).submit();
 
+			 Swal.fire({
+				 title: '¿Estás seguro de eliminar esta película?',
+				 text: 'Verifique antes de continuar',
+				 icon: 'warning',
+				 showCancelButton: true,
+				 confirmButtonColor: '#3085d6',
+				 cancelButtonColor: '#d33',
+				 cancelButtonText: 'Cancelar',
+                 confirmButtonText: 'Si, eliminar!'
+
+			 }).then((result) => {
+				 if (result.isConfirmed) {
+					 document.getElementById('eliminarPeliculaForm' + id).submit();
+
+				 }
+			 })
 		 }
       </script>
   </div>

@@ -5,6 +5,7 @@
 <head>
 <meta charset="utf-8">
 <title th:inline="text">Peliculas</title>
+	<link rel="icon" href="logo.png">
 </head>
 <body>
 
@@ -13,7 +14,7 @@
 
 		<div class="row">
 			<div class="row">
-				<div class="col-md-3 my-5" th:each="pelicula : ${peliculas}"
+				<div class="col-md-4 my-5" th:each="pelicula : ${peliculas}"
 					th:object="${pelicula}">
 					<a th:href="@{/peliculas/{id}(id=*{id})}" class="card shadow-lg"
 						style="text-decoration: none;"> <img

@@ -43,4 +43,11 @@ public class HomeControlador {
 		Pelicula pelicula = peliculaRepositorio.getOne(id);
 		return new ModelAndView("pelicula").addObject("pelicula",pelicula);
 	}
+
+	@GetMapping("/loginadmin")
+	public String mostrarLoginAdmin() {
+		return "login"; // Nombre del archivo HTML dentro de templates
+	}
+
+
 }
