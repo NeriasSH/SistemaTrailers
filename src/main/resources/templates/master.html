@@ -18,24 +18,47 @@
 </head>
 <body class="bg-light">
 
+
 <!-- Barra de navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="/">CinemaTrailer</a>
+
 		<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
 				aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
+
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+			<!-- Si el usuario no ha iniciado sesión-->
+			<ul th:if="${#session.getAttribute('usuario') == null}" class="navbar-nav me-auto mb-2 mb-lg-0">
+
 				<li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
-				<li class="nav-item"><a class="nav-link" href="/peliculas">Peliculas</a></li>
+				<li class="nav-item"><a class="nav-link" href="/peliculas">Películas</a></li>
 
 			</ul>
 
-			<a id="Iniciarsesion" class="btn btn-outline-secondary ms-2" href="/loginadmin">Administrar</a>
+			<div th:if="${#session.getAttribute('usuario') == null}"  class="ms-auto">
+				<a id="Iniciarsesion" class="btn btn-outline-secondary ms-2" href="/loginadmin">Administrar</a>
+			</div>
+
+<!--			<a th:href="@{/verifySession}">Verificar sesión</a>-->
+			<!-- Si el usuario ha iniciado sesión-->
+			<ul th:if="${#session.getAttribute('usuario') != null}" class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+				<li class="nav-item"><a class="nav-link" href="/peliculas">Películas</a></li>
+				<li class="nav-item"><a class="nav-link" href="/admin">Administración</a></li>
+			</ul>
+
+
+			<div th:if="${#session.getAttribute('usuario') != null}" class="ms-auto">
+				<a id="Cerrarsesion" class="btn btn-outline-secondary ms-2" href="/logout">Cerrar Sesión</a>
+			</div>
+
+			<!-- Botón para cambiar tema -->
 			<button id="theme-toggle" class="btn btn-outline-secondary ms-2">
 				<i id="theme-icon" class="bi bi-moon"></i>
 			</button>
