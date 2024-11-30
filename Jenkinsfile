@@ -1,39 +1,29 @@
 pipeline {
-    agent any // Ejecuta en cualquier agente disponible
+    agent any
+
     stages {
         stage('Clonar Repositorio') {
             steps {
-                git branch: 'main', url: 'https://github.com/NeriasSH/SistemaTrailers.git'
+                git 'https://github.com/NeriasSH/SistemaTrailers.git'
             }
         }
+
         stage('Compilar') {
             steps {
-                sh './mvnw clean compile' // Usa Maven Wrapper o mvn si está instalado
+                bat 'mvn clean package' // O el comando de compilación específico de tu proyecto
             }
         }
+
         stage('Pruebas') {
             steps {
-                sh './mvnw test' // Ejecuta las pruebas
+                bat 'mvn test' // Si tienes pruebas
             }
         }
+
         stage('Empaquetar') {
             steps {
-                sh './mvnw package' // Genera el archivo JAR o WAR
+                bat 'mvn package' // O tu comando de empaquetado
             }
-        }
-        stage('Despliegue (opcional)') {
-            steps {
-                // Despliegue en un servidor remoto (SSH o similar)
-                echo 'Desplegando en el servidor...'
-            }
-        }
-    }
-    post {
-        success {
-            echo 'Pipeline completado exitosamente.'
-        }
-        failure {
-            echo 'Pipeline falló. Revisa los logs.'
         }
     }
 }
