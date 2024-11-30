@@ -32,7 +32,7 @@ public class LoginControler {
 
         if (admin != null && admin.getPassword().equals(password)) {
             session.setAttribute("usuario", admin);
-            return "redirect:/"; // Redirige al panel de administración
+            return "redirect:/admin"; // Redirige al panel de administración
         } else {
             model.addAttribute("error", "Usuario o contraseña incorrectos");
             return "redirect:/"; // Regresa a la vista de login
@@ -45,7 +45,7 @@ public class LoginControler {
         return "redirect:/"; // Redirige a la página principal
     }
 
-  /*  @GetMapping("/verifySession")
+   @GetMapping("/verifySession")
     public String verifySession(HttpSession session) {
         // Verificar si la sesión tiene el atributo 'usuario'
         if (session.getAttribute("usuario") != null) {
@@ -54,7 +54,7 @@ public class LoginControler {
             System.out.println("Sesión no activa.");
         }
         return "redirect:/peliculas"; // Redirige a alguna página
-    }*/
+    }
 
 
 }
