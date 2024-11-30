@@ -1,29 +1,51 @@
 pipeline {
-    agent any
+    agent any // Ejecuta en cualquier agente disponible
+
+    tools {
+        // Configura las herramientas necesarias
+        maven 'Maven' // Asegúrate de que esto coincida con el nombre configurado en Jenkins Global Tool Configuration
+        jdk 'JDK' // Configura el JDK si es necesario
+    }
 
     stages {
         stage('Clonar Repositorio') {
             steps {
-                git 'https://github.com/NeriasSH/SistemaTrailers.git'
+                git branch: 'main', url: 'https://github.com/NeriasSH/SistemaTrailers.git'
             }
         }
 
         stage('Compilar') {
             steps {
-                bat 'mvn clean package' // O el comando de compilación específico de tu proyecto
+                bat 'mvnw clean compile' // Cambio de sh a bat para Windows
             }
         }
 
         stage('Pruebas') {
             steps {
-                bat 'mvn test' // Si tienes pruebas
+                bat 'mvnw test' // Cambio de sh a bat para Windows
             }
         }
 
         stage('Empaquetar') {
             steps {
-                bat 'mvn package' // O tu comando de empaquetado
+                bat 'mvnw package' // Cambio de sh a bat para Windows
             }
+        }
+
+        stage('Despliegue') {
+            steps {
+                // Despliegue en un servidor remoto (SSH o similar)
+                echo 'Desplegando en el servidor...'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completado exitosamente.'
+        }
+        failure {
+            echo 'Pipeline falló. Revisa los logs.'
         }
     }
 }
