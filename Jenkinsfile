@@ -22,13 +22,13 @@ pipeline {
 
         stage('Pruebas') {
             steps {
-                bat 'mvn test' // Ejecuta las pruebas si las tienes
+                bat './mvnw.cmd test' // Ejecuta las pruebas si las tienes
             }
         }
 
         stage('Empaquetar') {
             steps {
-                bat 'mvn package' // Empaqueta tu proyecto
+                bat './mvnw.cmd package' // Empaqueta tu proyecto
             }
         }
     }
