@@ -1,33 +1,36 @@
 pipeline {
     agent any
 
+    environment {
+        JAVA_HOME = 'C:\\Program Files\\Java\\jdk-23'  // Asegúrate de que esta sea la ruta correcta
+        PATH = "${env.JAVA_HOME}\\bin:${env.PATH}"
+    }
+
     stages {
 
-       stage('Clonar Repositorio') {
-                   steps {
-                       git branch: 'main', url: 'https://github.com/NeriasSH/SistemaTrailers.git'
-                   }
-               }
-
-        environment {
-            JAVA_HOME = 'C:\Program Files\Java\jdk-23'
-            PATH = "${env.JAVA_HOME}\\bin:${env.PATH}"
-        }
-        steps ('Compilar'){
-            bat './mvnw.cmd clean package'
+        stage('Clonar Repositorio') {
+            steps {
+                git branch: 'main', url: 'https://github.com/NeriasSH/SistemaTrailers.git'
+            }
         }
 
+        stage('Compilar') {
+            steps {
+                bat './mvnw.cmd clean package'
+            }
+        }
 
         stage('Pruebas') {
             steps {
-                bat 'mvn test' // Si tienes pruebas
+                bat 'mvn test' // Ejecuta las pruebas si las tienes
             }
         }
 
         stage('Empaquetar') {
             steps {
-                bat 'mvn package' // O tu comando de empaquetado
+                bat 'mvn package' // Empaqueta tu proyecto
             }
         }
     }
 }
+
