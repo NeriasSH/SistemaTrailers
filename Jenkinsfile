@@ -10,7 +10,7 @@ pipeline {
 
         stage('Compilar') {
             steps {
-                bat 'mvn clean package' // O el comando de compilación específico de tu proyecto
+                bat './mvnw.cmd clean package'
             }
         }
 
