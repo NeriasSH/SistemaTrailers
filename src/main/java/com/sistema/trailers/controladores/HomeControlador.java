@@ -2,8 +2,7 @@ package com.sistema.trailers.controladores;
 
 import java.util.List;
 
-import com.sistema.trailers.modelo.Administrador;
-import com.sistema.trailers.repositorios.AdministradorRepositorio;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,14 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sistema.trailers.modelo.Pelicula;
 import com.sistema.trailers.repositorios.PeliculaRepositorio;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("")
@@ -43,11 +39,9 @@ public class HomeControlador {
 	
 	@GetMapping("/peliculas/{id}")
 	public ModelAndView mostrarDetallesDePelicula(@PathVariable Integer id) {
-		Pelicula pelicula = peliculaRepositorio.getOne(id);
+		Pelicula pelicula = peliculaRepositorio.getById(id);
 		return new ModelAndView("pelicula").addObject("pelicula",pelicula);
 	}
-
-//Controladores
 
 
 
