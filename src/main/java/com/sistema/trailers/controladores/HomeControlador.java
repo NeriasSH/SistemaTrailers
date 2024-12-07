@@ -47,7 +47,7 @@ public class HomeControlador {
 		return new ModelAndView("pelicula").addObject("pelicula",pelicula);
 	}
 
-
+//Controladores
 
 
 
